@@ -1,55 +1,58 @@
-package abstrait;
+package abstrait ;
 
 public class Mario extends Mobile
 {
-	public int pv ;
-	public boolean saut ;
-	public boolean dahutPris ;
+	private int pv ;
+	private boolean saut ;
+	private boolean dahutPris ;
+	
+	protected static final int pvInit = 10 ;
+	protected static final double puissanceDeSaut = 2 ;
+	protected static final double largeurMario = 1 ;
+	protected static final double hauteurMario = 1 ;
+	protected static final double accelerationTerrestre = 0.1 ;
+	protected static final double accelerationAerienne = 0.1 ;
 
 	public Mario(double x, double y)
 	{
-		super(x - Config.largeurMario/2, 
-			x + Config.largeurMario/2, 
-			y - Config.hauteurMario/2, 
-			y + Config.hauteurMario/2,
-			0,0) ;
-		pv = Config.pvInit ;
+		super(x, x + largeurMario, y, y + hauteurMario, 0, 0) ;
+		pv = pvInit ;
 		saut = true ;
 		dahutPris = false ;
 	}
 	
+	public int getPv() {
+		return pv;
+	}
+
 	public void decreasePv()
 	{
 		pv-- ;
 	}
 
+	public boolean getDahutPris() {
+		return dahutPris ;
+	}
+	
 	public void saute()
 	{
 		if(!saut)
 		{
-			addSpeed(0.0,Config.puissanceDeSaut) ;
+			addSpeed(0.0,puissanceDeSaut) ;
 		}
 	}
-
-	public void frottement(double f)
-	{
-		if(vx > 0)
-			vx = Math.max(vx - f * Config.dt, 0.0) ;
-		else
-			vx = Math.min(vx + f * Config.dt, 0.0) ;
-	}
 	
-	public void update(boolean haut, boolean gauche, boolean droite)
+	public void update(boolean haut, boolean gauche, boolean droite, double dt)
 	{
 		if(saut)
 		{
 			if(gauche)
 			{
-				addSpeed(- Config.accelerationAerienne, 0.0) ;
+				addSpeed(- accelerationAerienne, 0.0) ;
 			}
 			if(droite)
 			{
-				addSpeed(Config.accelerationAerienne, 0.0) ;
+				addSpeed(accelerationAerienne, 0.0) ;
 			}
 		}
 		
@@ -57,11 +60,11 @@ public class Mario extends Mobile
 		{
 			if(gauche)
 			{
-				addSpeed(- Config.accelerationTerrestre,0.0) ;
+				addSpeed(-accelerationTerrestre,0.0) ;
 			}
 			if(droite)
 			{
-				addSpeed(Config.accelerationTerrestre,0.0) ;
+				addSpeed(accelerationTerrestre,0.0) ;
 			}
 			if(haut)
 			{
@@ -69,20 +72,21 @@ public class Mario extends Mobile
 			}
 		}
 		
-		xmin = xmin + Config.dt * vx ;
-		xmax = xmax + Config.dt * vx ;
-		ymin = xmin + Config.dt * vy ;
-		ymax = xmax + Config.dt * vy ;
+		xmin = xmin + dt * vx ;
+		xmax = xmax + dt * vx ;
+		ymin = xmin + dt * vy ;
+		ymax = xmax + dt * vy ;
 		
 		if(saut)
 		{
-			frottement(Config.frottementAerien) ;
-			vy = vy - Config.dt * Config.gravity ;
+			frottement(frottementAerien, dt) ;
+			vy = vy - dt * gravity ;
 		}
 		
 		else
 		{
-			frottement(Config.frottementTerrestre) ;
+			frottement(frottementTerrestre, dt) ;
+			vy = vy - dt * gravity ;
 		}
 		
 		//TODO régler les problèmes de contact

@@ -1,36 +1,88 @@
-package abstrait;
+ggpackage abstrait;
 
 import java.util.PriorityQueue;
 
 public class DC
 {
-	public double x ;
-	public double y ;
-	public int armeCourante ; // 0 pomme ; 1 trombone ; 2 brosse ; 3 pastèque
-	public double tempsRecharge ;
-	public double puissance ;
-	public int état ; // 0 repos ; 1 chargement ; 2 tir en cours
-	public PriorityQueue<Activable> activables ;
+	private double x ;
+	private double y ;
+	private int armeCourante ; // 0 pomme ; 1 trombone ; 2 brosse ; 3 pastèque
+	private boolean chargement; 
+	private double tempsPomme ;
+	private double tempsTrombone ;
+	private double tempsBrosse ;
+	private double tempsPasteque ;
+	private double puissance ;
+	private PriorityQueue<Activable> activables ;
 	
+	protected static final double vitesseChargement = 1.0 ;
 
 	public DC(double x, double y)
 	{
 		this.x = x ;
 		this.y = y ;
 		armeCourante = 1 ; 
-		tempsRecharge = 0.0 ;
+		tempsPomme = 0.0 ;
+		tempsTrombone = 0.0 ;
+		tempsBrosse = 0.0 ;
+		tempsPasteque = 0.0 ;
 		puissance = 0.0 ;
 		activables = new PriorityQueue<Activable>() ;
 	}
-
-	public void changeArme(int i)
+	
+	public double getX()
+	{
+		return x ;
+	}
+	
+	public double getY()
+	{
+		return y ;
+	}
+	
+	public int getArmeCourante()
+	{
+		return armeCourante ;
+	}
+	
+	public void setArmeCourante(int i)
 	{
 		armeCourante = i ;
 	}
 	
+	public boolean getChargement()
+	{
+		return chargement ;
+	}
+	
+	public double getTempsPomme()
+	{
+		return tempsPomme ;
+	}
+	
+	public double getTempsTrombone()
+	{
+		return tempsTrombone ;
+	}
+	
+	public double getTempsBrosse()
+	{
+		return tempsBrosse ;
+	}
+	
+	public double getTempsPasteque()
+	{
+		return tempsPasteque ;
+	}
+	
+	public double getPuissance()
+	{
+		return puissance ;
+	}
+
 	public void charge()
 	{
-		puissance = puissance + Config.vitesseChargement ;
+		puissance = puissance + vitesseChargement ;
 	}
 
 	public void feu()
