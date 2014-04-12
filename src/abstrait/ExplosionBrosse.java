@@ -3,23 +3,24 @@ package abstrait;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ExplosionBrosse implements Evenement {
-
+public class ExplosionBrosse implements Evenement 
+{
+	private Brosse b ;
 	private double x ;
 	private double y ;
-	private double r ;
 
-	public ExplosionBrosse(double x, double y, double r)
+	public ExplosionBrosse(Brosse b)
 	{
-		this.x = x ;
-		this.y = y ;
-		this.r = r ;
+		this.b = b ;
+		x = (b.getXmin() + b.getXmax()) / 2 ;
+		y = (b.getYmin() + b.getYmax()) / 2 ;
 	}
 	
 	public Set<EvenementGraphique> execute(Monde m)
 	{
 		HashSet<EvenementGraphique> hs = new HashSet<EvenementGraphique>() ;
-		hs.add(new ExplosionBrosseGraphique(x,y,r)) ;
+		hs.add(new ExplosionBrosseGraphique(x, y, b.getRayon())) ;
+		m.removeProjectile(b) ;
 		return hs ;
 	}
 }

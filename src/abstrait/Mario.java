@@ -35,6 +35,11 @@ public class Mario extends Mobile
 	public boolean getDahutPris() {
 		return dahutPris ;
 	}
+
+
+	public boolean getSaut() {
+		return saut ;
+	}
 	
 	public void saute()
 	{

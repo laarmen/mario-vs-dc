@@ -15,7 +15,10 @@ public class DC
 	private double puissance ;
 	private PriorityQueue<Activable> activables ;
 	
-	protected final double vitesseChargement = 1.0 ;
+	private final double vitesseChargement = 1.0 ;
+	private final double tailleProjectile = 0.3 ;
+	private final double vmax = 20 ;
+	private final double facteurCraie = 1 ;
 
 	public DC(double x, double y)
 	{
@@ -82,29 +85,51 @@ public class DC
 
 	public void charge()
 	{
-		puissance = puissance + vitesseChargement ;
+		puissance = puissance + 1 ;
+	}
+	
+	public void activation()
+	{
+		Activable a = activables.poll() ;
+		if(a != null)
+		{
+			a.active() ;
+			activables.remove(a) ;
+		}
 	}
 
-	public void feu()
+	public void feu(Monde m, double xVise, double yVise)
 	{
+		double xmin = x - tailleProjectile/2 ;
+		double xmax = x + tailleProjectile/2 ;
+		double ymin = y - tailleProjectile/2 ;
+		double ymax = y + tailleProjectile/2 ;
+		
+		double vx = xVise - x ;
+		double vy = yVise - y ;
+		double d = Math.sqrt(vx*vx + vy*vy) ;
+		double a = (4/Math.PI) * vmax * Math.atan(puissance * vitesseChargement) ;
+		vx = vx * a / d ;
+		vy = vy * a / d ;
+		
 		switch (armeCourante)
 		{
 			case 0:
-				Scene.projList.add(new Pomme(/*TODO*/) ;
+				m.addProjectile(new Pomme(xmin,xmax,ymin,ymax,vx,vy)) ;
 				break ;
 			case 1:
-				Trombone t = new Trombone(/*TODO*/) ;
-				Scene.projList.add(t) ;
+				Trombone t = new Trombone(xmin,xmax,ymin,ymax,vx,vy) ;
+				m.addProjectile(t) ;
 				activables.add(t) ;
 				break;
 			case 2:
-				Brosse b = new Brosse(/*TODO*/) ;
-				Scene.projList.add(b) ;
+				Brosse b = new Brosse(xmin,xmax,ymin,ymax,vx,vy,facteurCraie*a) ;
+				m.addProjectile(b) ;
 				activables.add(b) ;
 				break;
 			default:
-				Pasteque p = new Pasteque(/*TODO*/) ;
-				Scene.projList.add(p) ;
+				Pasteque p = new Pasteque(xmin,xmax,ymin,ymax,vx,vy) ;
+				m.addProjectile(p) ;
 				activables.add(p) ;
 		}
 	}

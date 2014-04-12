@@ -5,7 +5,7 @@ import java.util.HashSet;
 public class Pasteque extends Mobile implements Activable
 {
 	private boolean actif ;
-	private final double rayonPasteque = 1.5 ;
+	protected final double rayonPasteque = 1.5 ;
 	
 	public Pasteque(double xmin, double xmax, double ymin, double ymax,
 			double vx, double vy)
@@ -24,7 +24,7 @@ public class Pasteque extends Mobile implements Activable
 		HashSet<Evenement> hs = new HashSet<Evenement>() ;
 		if(actif)
 		{
-			hs.add(new ExplosionPasteque((xmin + xmax)/2, (ymin + ymax)/2, rayonPasteque)) ;
+			hs.add(new ExplosionPasteque(this)) ;
 			return hs ;
 		}
 		else

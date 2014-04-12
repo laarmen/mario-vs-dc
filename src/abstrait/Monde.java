@@ -3,16 +3,17 @@ package abstrait;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Queue;
-import java.util.Vector;
 
 public class Monde {
 	private Mario mario;
 	private Mobile dahut;
 	private double dcx, dcy;
-	private Vector<Mobile> projectiles;
-	private Vector<Bloc> blocs;
-	private Vector<Echelle> echelles;
+	private HashSet<Mobile> projectiles;
+	private HashSet<Bloc> blocs;
+	private HashSet<Bloc> echelles;
+	private HashSet<Mine> mines;
 	private Queue<EvenementGraphique> event_queue;
 	
 	public Monde(String scene_filename) {
@@ -53,8 +54,31 @@ public class Monde {
 	/**
 	 * @return the projectiles
 	 */
-	public Vector<Mobile> getProjectiles() {
+	public HashSet<Mobile> getProjectiles() {
 		return projectiles;
 	}
-
+	
+	public void addProjectile(Mobile p)
+	{
+		projectiles.add(p) ;
+	}
+	
+	public void removeProjectile(Mobile p)
+	{
+		projectiles.remove(p) ;
+	}
+	
+	public HashSet<Mine> getMine() {
+		return mines;
+	}
+	
+	public void addMine(Mine m)
+	{
+		mines.add(m) ;
+	}
+	
+	public void removeMine(Mine m)
+	{
+		mines.remove(m) ;
+	}
 }

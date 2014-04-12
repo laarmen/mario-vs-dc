@@ -20,12 +20,17 @@ public class Brosse extends Mobile implements Activable
 		actif = true ;
 	}
 	
+	public double getRayon()
+	{
+		return rayon ;
+	}
+	
 	public HashSet<Evenement> update(double dt)
 	{
 		HashSet<Evenement> hs = new HashSet<Evenement>() ;
 		if(actif)
 		{
-			hs.add(new ExplosionBrosse((xmin + xmax)/2, (ymin + ymax)/2, rayon)) ;
+			hs.add(new ExplosionBrosse(this)) ;
 			return hs ;
 		}
 		else
