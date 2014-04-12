@@ -1,5 +1,7 @@
 package abstrait;
 
+import java.util.HashSet;
+
 public class Mobile extends Bloc
 {
 	protected double vx ;
@@ -30,7 +32,7 @@ public class Mobile extends Bloc
 			vx = Math.min(vx + f * dt, 0.0) ;
 	}
 	
-	public void update(double dt)
+	public HashSet<Evenement> update(double dt)
 	{
 		xmin = xmin + dt * vx ;
 		xmax = xmax + dt * vx ;
@@ -38,5 +40,6 @@ public class Mobile extends Bloc
 		ymax = xmax + dt * vy ;
 		vx = vx - dt * frottementAerien ;
 		vy = vy - dt * gravity ;
+		return new HashSet<Evenement>() ;
 	}
 }

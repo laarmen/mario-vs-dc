@@ -1,17 +1,19 @@
 package abstrait ;
 
+import java.util.HashSet;
+
 public class Mario extends Mobile
 {
 	private int pv ;
 	private boolean saut ;
 	private boolean dahutPris ;
 	
-	protected static final int pvInit = 10 ;
-	protected static final double puissanceDeSaut = 2 ;
+	protected final int pvInit = 10 ;
+	protected final double puissanceDeSaut = 2 ;
 	protected static final double largeurMario = 1 ;
 	protected static final double hauteurMario = 1 ;
-	protected static final double accelerationTerrestre = 0.1 ;
-	protected static final double accelerationAerienne = 0.1 ;
+	protected final double accelerationTerrestre = 0.1 ;
+	protected final double accelerationAerienne = 0.1 ;
 
 	public Mario(double x, double y)
 	{
@@ -42,7 +44,7 @@ public class Mario extends Mobile
 		}
 	}
 	
-	public void update(boolean haut, boolean gauche, boolean droite, double dt)
+	public HashSet<Evenement> update(boolean haut, boolean gauche, boolean droite, double dt)
 	{
 		if(saut)
 		{
@@ -88,6 +90,8 @@ public class Mario extends Mobile
 			frottement(frottementTerrestre, dt) ;
 			vy = vy - dt * gravity ;
 		}
+		
+		return new HashSet<Evenement>() ;
 		
 		//TODO régler les problèmes de contact
 	}

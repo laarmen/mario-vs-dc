@@ -1,4 +1,4 @@
-ggpackage abstrait;
+package abstrait;
 
 import java.util.PriorityQueue;
 
@@ -15,7 +15,7 @@ public class DC
 	private double puissance ;
 	private PriorityQueue<Activable> activables ;
 	
-	protected static final double vitesseChargement = 1.0 ;
+	protected final double vitesseChargement = 1.0 ;
 
 	public DC(double x, double y)
 	{
